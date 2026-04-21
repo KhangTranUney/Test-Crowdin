@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-Download translations from a Crowdin string-based project via REST API
-and copy Android strings XML files into res/values-{lang}/ directories.
+Download translations from a Crowdin string-based project via REST API.
+Downloads XML files directly from Crowdin and saves them as strings.xml
+in the correct res/values-{lang}/ directories.
 
 Usage:
     python3 download_translations.py
@@ -72,8 +73,7 @@ def api_post(path: str, token: str, body: dict) -> dict:
         sys.exit(1)
 
 
-def export_language(token: str, project_id: str, language_id: str, approved_only: bool) -> str:
-    """Trigger an export and return the download URL."""
+def get_export_url(token: str, project_id: str, language_id: str, approved_only: bool) -> str:
     body = {"targetLanguageId": language_id, "format": "android"}
     if approved_only:
         body["exportApprovedOnly"] = True
@@ -81,42 +81,15 @@ def export_language(token: str, project_id: str, language_id: str, approved_only
     return resp["data"]["url"]
 
 
-def download_xml(url: str) -> str:
+def download_and_save(url: str, dest_path: str, label: str, dry_run: bool):
     with urllib.request.urlopen(url, context=SSL_CONTEXT) as resp:
-        return resp.read().decode("utf-8")
-
-
-def fetch_source_xml(token: str, project_id: str) -> str:
-    """Fetch all source strings and build an Android strings.xml."""
-    items = []
-    offset = 0
-    while True:
-        resp = api_get(f"/projects/{project_id}/strings?limit=500&offset={offset}", token)
-        page = resp.get("data", [])
-        items.extend(item["data"] for item in page)
-        if len(page) < 500:
-            break
-        offset += 500
-
-    lines = ['<?xml version="1.0" encoding="utf-8"?>', "<resources>"]
-    for s in items:
-        key = s["identifier"]
-        text = (s.get("text") or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-        key_escaped = key.replace("&", "&amp;")
-        comment = f' comment="{s["context"]}"' if s.get("context") else ""
-        lines.append(f'    <string name="{key_escaped}"{comment}>{text}</string>')
-    lines.append("</resources>")
-    return "\n".join(lines)
-
-
-def write_or_print(xml: str, dest_path: str, label: str, dry_run: bool):
+        content = resp.read()
     if dry_run:
-        print(f"\n--- [dry-run] {label} ---")
-        print(xml[:500] + ("..." if len(xml) > 500 else ""))
+        print(f"  [dry-run] Would write {len(content)} bytes → {label}")
     else:
         os.makedirs(os.path.dirname(dest_path), exist_ok=True)
-        with open(dest_path, "w", encoding="utf-8") as f:
-            f.write(xml)
+        with open(dest_path, "wb") as f:
+            f.write(content)
         print(f"  Written → {label}")
 
 
@@ -129,7 +102,7 @@ def main():
     parser.add_argument("--language", "-l", action="append", default=[], metavar="LANG",
                         help="Crowdin language code(s) to download. Default: all target languages.")
     parser.add_argument("--export-only-approved", action="store_true")
-    parser.add_argument("--dry-run", action="store_true", help="Print XML without writing files")
+    parser.add_argument("--dry-run", action="store_true", help="Preview without writing files")
     args = parser.parse_args()
 
     if not args.token or not args.project_id:
@@ -145,11 +118,12 @@ def main():
         languages = [l for l in languages if l in all_languages]
 
     # Download source language → values/strings.xml
-    print(f"Exporting source '{project['sourceLanguageId']}'...", end=" ", flush=True)
-    source_xml = fetch_source_xml(args.token, args.project_id)
+    source_lang = project["sourceLanguageId"]
+    print(f"Exporting source '{source_lang}'...", end=" ", flush=True)
+    source_url = get_export_url(args.token, args.project_id, source_lang, args.export_only_approved)
     print("done.")
-    write_or_print(
-        source_xml,
+    download_and_save(
+        source_url,
         os.path.join(ANDROID_RES_DIR, "values", OUTPUT_FILENAME),
         f"values/{OUTPUT_FILENAME}",
         args.dry_run,
@@ -157,13 +131,12 @@ def main():
 
     # Download each target language → values-{androidCode}/strings.xml
     for lang in languages:
-        android_code = all_languages[lang]  # e.g. "vi-rVN", "zh-rCN"
+        android_code = all_languages[lang]
         print(f"Exporting '{lang}' ({android_code})...", end=" ", flush=True)
-        url = export_language(args.token, args.project_id, lang, args.export_only_approved)
-        xml = download_xml(url)
+        url = get_export_url(args.token, args.project_id, lang, args.export_only_approved)
         print("done.")
-        write_or_print(
-            xml,
+        download_and_save(
+            url,
             os.path.join(ANDROID_RES_DIR, f"values-{android_code}", OUTPUT_FILENAME),
             f"values-{android_code}/{OUTPUT_FILENAME}",
             args.dry_run,
