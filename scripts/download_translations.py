@@ -102,8 +102,9 @@ def fetch_source_xml(token: str, project_id: str) -> str:
     for s in items:
         key = s["identifier"]
         text = (s.get("text") or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        key_escaped = key.replace("&", "&amp;")
         comment = f' comment="{s["context"]}"' if s.get("context") else ""
-        lines.append(f'    <string name="{key}"{comment}>{text}</string>')
+        lines.append(f'    <string name="{key_escaped}"{comment}>{text}</string>')
     lines.append("</resources>")
     return "\n".join(lines)
 
