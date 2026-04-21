@@ -1,41 +1,35 @@
 #!/usr/bin/env python3
 """
-Download translations from Crowdin and copy them to Android res directories.
+Download translations from a Crowdin string-based project via REST API
+and copy Android strings XML files into res/values-{lang}/ directories.
 
 Usage:
-    python3 download_translations.py --token <TOKEN> --project-id <ID>
-
-Requirements:
-    - Crowdin CLI installed: https://crowdin.github.io/crowdin-cli/
+    python3 download_translations.py
+    python3 download_translations.py -l vi
+    python3 download_translations.py --export-only-approved --dry-run
 """
 
 import argparse
+import json
 import os
-import shutil
-import subprocess
+import ssl
 import sys
-import tempfile
+import urllib.error
+import urllib.request
 
-# Map Crowdin language codes → Android res folder suffixes
-LANGUAGE_MAP = {
-    "vi": "vi",
-    "fr": "fr",
-    "de": "de",
-    "es-ES": "es",
-    "ja": "ja",
-    "ko": "ko",
-    "zh-CN": "zh-rCN",
-    "zh-TW": "zh-rTW",
-    "pt-PT": "pt",
-    "pt-BR": "pt-rBR",
-}
+try:
+    import certifi
+    SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
+except ImportError:
+    SSL_CONTEXT = ssl.create_default_context()
 
-# Path to Android strings resource directory relative to this script
+BASE_API = "https://api.crowdin.com/api/v2"
+
 ANDROID_RES_DIR = os.path.join(os.path.dirname(__file__), "..", "app", "src", "main", "res")
+OUTPUT_FILENAME = "strings.xml"
 
 
 def load_env(env_file: str = ".env"):
-    """Load key=value pairs from a .env file into os.environ."""
     env_path = os.path.join(os.path.dirname(__file__), env_file)
     if not os.path.exists(env_path):
         return
@@ -48,99 +42,131 @@ def load_env(env_file: str = ".env"):
             os.environ.setdefault(key.strip(), value.strip())
 
 
-def check_crowdin_cli():
-    result = subprocess.run(["crowdin", "--version"], capture_output=True, text=True)
-    if result.returncode != 0:
-        print("Error: Crowdin CLI not found. Install it from https://crowdin.github.io/crowdin-cli/")
-        sys.exit(1)
-    print(f"Crowdin CLI: {result.stdout.strip()}")
-
-
-def download_translations(token: str, project_id: str, languages: list[str], export_only_approved: bool, output_dir: str):
-    cmd = [
-        "crowdin", "download",
-        "--token", token,
-        "--project-id", project_id,
-        "--base-path", output_dir,
-        "--translation", "%locale%/%original_file_name%",
-        "--verbose",
-    ]
-
-    for lang in languages:
-        cmd += ["--language", lang]
-
-    if export_only_approved:
-        cmd.append("--export-only-approved")
-
-    print(f"\nRunning: {' '.join(cmd)}\n")
-    result = subprocess.run(cmd, text=True)
-
-    if result.returncode != 0:
-        print("Error: Crowdin download failed.")
+def api_get(path: str, token: str) -> dict:
+    req = urllib.request.Request(
+        f"{BASE_API}{path}",
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    try:
+        with urllib.request.urlopen(req, context=SSL_CONTEXT) as resp:
+            return json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        print(f"API error {e.code} GET {path}: {e.read().decode()}")
         sys.exit(1)
 
 
-def copy_to_android_res(output_dir: str, languages: list[str]):
-    copied = 0
+def api_post(path: str, token: str, body: dict) -> dict:
+    req = urllib.request.Request(
+        f"{BASE_API}{path}",
+        method="POST",
+        data=json.dumps(body).encode(),
+        headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
+    )
+    try:
+        with urllib.request.urlopen(req, context=SSL_CONTEXT) as resp:
+            return json.loads(resp.read())
+    except urllib.error.HTTPError as e:
+        print(f"API error {e.code} POST {path}: {e.read().decode()}")
+        sys.exit(1)
 
-    for crowdin_lang, android_suffix in LANGUAGE_MAP.items():
-        if languages and crowdin_lang not in languages:
-            continue
 
-        src_dir = os.path.join(output_dir, crowdin_lang)
-        if not os.path.isdir(src_dir):
-            print(f"  Skipping {crowdin_lang}: no downloaded files found")
-            continue
+def export_language(token: str, project_id: str, language_id: str, approved_only: bool) -> str:
+    """Trigger an export and return the download URL."""
+    body = {"targetLanguageId": language_id, "format": "android"}
+    if approved_only:
+        body["exportApprovedOnly"] = True
+    resp = api_post(f"/projects/{project_id}/translations/exports", token, body)
+    return resp["data"]["url"]
 
-        dest_dir = os.path.join(ANDROID_RES_DIR, f"values-{android_suffix}")
-        os.makedirs(dest_dir, exist_ok=True)
 
-        for filename in os.listdir(src_dir):
-            if not filename.endswith(".xml"):
-                continue
-            src_file = os.path.join(src_dir, filename)
-            dest_file = os.path.join(dest_dir, filename)
-            shutil.copy2(src_file, dest_file)
-            print(f"  Copied: {crowdin_lang}/{filename} → res/values-{android_suffix}/{filename}")
-            copied += 1
+def download_xml(url: str) -> str:
+    with urllib.request.urlopen(url, context=SSL_CONTEXT) as resp:
+        return resp.read().decode("utf-8")
 
-    print(f"\nDone. {copied} file(s) copied to {ANDROID_RES_DIR}")
+
+def fetch_source_xml(token: str, project_id: str) -> str:
+    """Fetch all source strings and build an Android strings.xml."""
+    items = []
+    offset = 0
+    while True:
+        resp = api_get(f"/projects/{project_id}/strings?limit=500&offset={offset}", token)
+        page = resp.get("data", [])
+        items.extend(item["data"] for item in page)
+        if len(page) < 500:
+            break
+        offset += 500
+
+    lines = ['<?xml version="1.0" encoding="utf-8"?>', "<resources>"]
+    for s in items:
+        key = s["identifier"]
+        text = (s.get("text") or "").replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+        comment = f' comment="{s["context"]}"' if s.get("context") else ""
+        lines.append(f'    <string name="{key}"{comment}>{text}</string>')
+    lines.append("</resources>")
+    return "\n".join(lines)
+
+
+def write_or_print(xml: str, dest_path: str, label: str, dry_run: bool):
+    if dry_run:
+        print(f"\n--- [dry-run] {label} ---")
+        print(xml[:500] + ("..." if len(xml) > 500 else ""))
+    else:
+        os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+        with open(dest_path, "w", encoding="utf-8") as f:
+            f.write(xml)
+        print(f"  Written → {label}")
 
 
 def main():
     load_env()
 
     parser = argparse.ArgumentParser(description="Download Crowdin translations into Android res folders")
-    parser.add_argument("--token", "-T", default=os.environ.get("CROWDIN_TOKEN"), help="Crowdin personal access token")
-    parser.add_argument("--project-id", "-i", default=os.environ.get("CROWDIN_PROJECT_ID"), help="Crowdin numeric project ID")
+    parser.add_argument("--token", "-T", default=os.environ.get("CROWDIN_TOKEN"))
+    parser.add_argument("--project-id", "-i", default=os.environ.get("CROWDIN_PROJECT_ID"))
     parser.add_argument("--language", "-l", action="append", default=[], metavar="LANG",
-                        help="Language code(s) to download (e.g. vi, fr). Repeatable. Default: all.")
-    parser.add_argument("--export-only-approved", action="store_true",
-                        help="Download only approved translations")
-    parser.add_argument("--dry-run", action="store_true",
-                        help="Preview without copying files to res/")
+                        help="Crowdin language code(s) to download. Default: all target languages.")
+    parser.add_argument("--export-only-approved", action="store_true")
+    parser.add_argument("--dry-run", action="store_true", help="Print XML without writing files")
     args = parser.parse_args()
 
     if not args.token or not args.project_id:
-        parser.error("--token and --project-id are required (or set CROWDIN_TOKEN and CROWDIN_PROJECT_ID in .env)")
+        parser.error("--token and --project-id are required (or set them in scripts/.env)")
 
-    check_crowdin_cli()
+    project = api_get(f"/projects/{args.project_id}", args.token)["data"]
+    all_languages = {lang["id"]: lang["androidCode"] for lang in project["targetLanguages"]}
+    languages = args.language if args.language else list(all_languages.keys())
 
-    with tempfile.TemporaryDirectory() as tmp_dir:
-        download_translations(
-            token=args.token,
-            project_id=args.project_id,
-            languages=args.language,
-            export_only_approved=args.export_only_approved,
-            output_dir=tmp_dir,
+    unknown = [l for l in languages if l not in all_languages]
+    if unknown:
+        print(f"Warning: {unknown} not in project target languages. Skipping.")
+        languages = [l for l in languages if l in all_languages]
+
+    # Download source language → values/strings.xml
+    print(f"Exporting source '{project['sourceLanguageId']}'...", end=" ", flush=True)
+    source_xml = fetch_source_xml(args.token, args.project_id)
+    print("done.")
+    write_or_print(
+        source_xml,
+        os.path.join(ANDROID_RES_DIR, "values", OUTPUT_FILENAME),
+        f"values/{OUTPUT_FILENAME}",
+        args.dry_run,
+    )
+
+    # Download each target language → values-{androidCode}/strings.xml
+    for lang in languages:
+        android_code = all_languages[lang]  # e.g. "vi-rVN", "zh-rCN"
+        print(f"Exporting '{lang}' ({android_code})...", end=" ", flush=True)
+        url = export_language(args.token, args.project_id, lang, args.export_only_approved)
+        xml = download_xml(url)
+        print("done.")
+        write_or_print(
+            xml,
+            os.path.join(ANDROID_RES_DIR, f"values-{android_code}", OUTPUT_FILENAME),
+            f"values-{android_code}/{OUTPUT_FILENAME}",
+            args.dry_run,
         )
 
-        if args.dry_run:
-            print("\n[Dry run] Skipping copy to res/")
-            print(f"Downloaded files are in: {tmp_dir}")
-            input("Press Enter to exit and clean up...")
-        else:
-            copy_to_android_res(tmp_dir, args.language)
+    print("\nDone.")
 
 
 if __name__ == "__main__":
