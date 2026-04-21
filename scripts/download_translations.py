@@ -109,7 +109,13 @@ def main():
         parser.error("--token and --project-id are required (or set them in scripts/.env)")
 
     project = api_get(f"/projects/{args.project_id}", args.token)["data"]
-    all_languages = {lang["id"]: lang["androidCode"] for lang in project["targetLanguages"]}
+    # Use twoLettersCode when unique, androidCode when multiple languages share the same two-letter code (e.g. zh-rCN vs zh-rTW)
+    from collections import Counter
+    two_letter_counts = Counter(lang["twoLettersCode"] for lang in project["targetLanguages"])
+    all_languages = {
+        lang["id"]: lang["twoLettersCode"] if two_letter_counts[lang["twoLettersCode"]] == 1 else lang["androidCode"]
+        for lang in project["targetLanguages"]
+    }
     languages = args.language if args.language else list(all_languages.keys())
 
     unknown = [l for l in languages if l not in all_languages]
