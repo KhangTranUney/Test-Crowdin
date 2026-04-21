@@ -1,6 +1,13 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+}
+
+val localProperties = Properties().apply {
+    val f = rootProject.file("local.properties")
+    if (f.exists()) f.inputStream().use { load(it) }
 }
 
 android {
@@ -20,7 +27,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "CROWDIN_DISTRIBUTION_HASH", "\"${project.findProperty("crowdin.distributionHash") ?: ""}\"")
+        buildConfigField("String", "CROWDIN_DISTRIBUTION_HASH", "\"${localProperties["crowdin.distributionHash"] ?: ""}\"")
     }
 
     buildTypes {
