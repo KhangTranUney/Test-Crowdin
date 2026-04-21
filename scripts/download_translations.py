@@ -17,6 +17,8 @@ import sys
 import urllib.error
 import urllib.request
 
+from validate_strings import run_interactive as validate_and_fix
+
 try:
     import certifi
     SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
@@ -165,6 +167,11 @@ def main():
             f"values-{android_code}/{OUTPUT_FILENAME}",
             args.dry_run,
         )
+
+    if not args.dry_run:
+        ok = validate_and_fix(os.path.abspath(ANDROID_RES_DIR))
+        if not ok:
+            sys.exit(1)
 
     print("\nDone.")
 
