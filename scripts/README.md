@@ -73,19 +73,6 @@ python3 scripts/cli_download_translations.py --dry-run
 
 ---
 
-### `cli_download_translations.sh`
-
-Shell script version of `cli_download_translations.py`. Same bundle-based logic without the validation step.
-
-**Usage:**
-```bash
-./scripts/cli_download_translations.sh
-./scripts/cli_download_translations.sh --export-only-approved
-./scripts/cli_download_translations.sh --dry-run
-```
-
----
-
 ### `validate_strings.py`
 
 Validates all `strings.xml` files under `app/src/main/res/values*/`. Can be run standalone or is called automatically by the download scripts.
