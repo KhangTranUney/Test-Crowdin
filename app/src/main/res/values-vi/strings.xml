@@ -125,5 +125,5 @@ KinShield</string>
   <string name="onboarding.how_to_allow_permission.modal.title" comment="how_to_set_kinshield_as_default_caller_id">HOW TO SET KINSHIELD AS DEFAULT CALLER ID</string>
   <string name="onboarding_login_terms_description" comment="by_continuing_you_agree_to_our_u_id_0_s_u">By continuing, you agree to our <u id="0">%s </u></string>
   <string name="test_123" comment="by_continuing_you_agree_to_our_s">By continuing, you agree to our %s</string>
-  <string name="test_456" comment="by_continuing_you_agree_to_our_s">By continuing, you agree to our %s</string>
+  <string name="test_456" comment="by_continuing_you_agree_to_our_s">Bằng cách tiếp tục, bạn đồng ý với %s</string>
 </resources>

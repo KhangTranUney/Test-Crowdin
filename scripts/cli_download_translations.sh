@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-# Download translations from Crowdin using the CLI.
-# Requires a file-based Crowdin project and crowdin.yml in the project root.
+# Download Android translations from Crowdin using a bundle.
 #
 # Usage:
-#   ./download_translations.sh
-#   ./download_translations.sh -l vi
-#   ./download_translations.sh --export-only-approved --dry-run
+#   ./cli_download_translations.sh
+#   ./cli_download_translations.sh --export-only-approved
+#   ./cli_download_translations.sh --dry-run
 
 set -euo pipefail
 
@@ -20,23 +19,18 @@ if [ -f "$SCRIPT_DIR/.env" ]; then
     done < "$SCRIPT_DIR/.env"
 fi
 
-# Crowdin CLI reads CROWDIN_PERSONAL_TOKEN
-export CROWDIN_PERSONAL_TOKEN="${CROWDIN_TOKEN:-}"
-
-: "${CROWDIN_PERSONAL_TOKEN:?CROWDIN_TOKEN not set in scripts/.env}"
+: "${CROWDIN_TOKEN:?CROWDIN_TOKEN not set in scripts/.env}"
 : "${CROWDIN_PROJECT_ID:?CROWDIN_PROJECT_ID not set in scripts/.env}"
 
 # Parse arguments
 EXTRA_ARGS=()
-DRY_RUN=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        -l|--language) EXTRA_ARGS+=(--language "$2"); shift 2 ;;
         --export-only-approved) EXTRA_ARGS+=(--export-only-approved); shift ;;
-        --dry-run) DRY_RUN=true; EXTRA_ARGS+=(--dryrun); shift ;;
+        --dry-run) EXTRA_ARGS+=(--dryrun); shift ;;
         -h|--help)
-            echo "Usage: $0 [-l LANG] [--export-only-approved] [--dry-run]"
+            echo "Usage: $0 [--export-only-approved] [--dry-run]"
             exit 0 ;;
         *) echo "Unknown option: $1"; exit 1 ;;
     esac
@@ -44,42 +38,7 @@ done
 
 cd "$PROJECT_DIR"
 
-# Download source file
-crowdin download sources \
-    --token "$CROWDIN_TOKEN" \
-    --project-id "$CROWDIN_PROJECT_ID" \
-    --source "/Default.csv" \
-    --translation "/%two_letters_code%/Default.csv"
-
-# Move source into crowdin_cli/source/en/
-if [ "$DRY_RUN" = false ] && [ -f "$PROJECT_DIR/Default.csv" ]; then
-    mkdir -p "$PROJECT_DIR/crowdin_cli/source/en"
-    mv "$PROJECT_DIR/Default.csv" "$PROJECT_DIR/crowdin_cli/source/en/Default.csv"
-    echo "  Moved → crowdin_cli/source/en/Default.csv"
-fi
-
-# Download translations
-crowdin download \
-    --token "$CROWDIN_TOKEN" \
-    --project-id "$CROWDIN_PROJECT_ID" \
-    --source "/Default.csv" \
-    --translation "/%two_letters_code%/Default.csv" \
-    --all \
-    "${EXTRA_ARGS[@]+"${EXTRA_ARGS[@]}"}"
-
-# Move translations into crowdin_cli/source/{lang}/
-if [ "$DRY_RUN" = false ]; then
-    for f in "$PROJECT_DIR"/*/Default.csv; do
-        lang_dir=$(basename "$(dirname "$f")")
-        dest="$PROJECT_DIR/crowdin_cli/source/$lang_dir/Default.csv"
-        mkdir -p "$(dirname "$dest")"
-        mv "$f" "$dest"
-        rmdir "$PROJECT_DIR/$lang_dir" 2>/dev/null || true
-        echo "  Moved → crowdin_cli/source/$lang_dir/Default.csv"
-    done
-fi
-
-# Download bundle
+# Find or create bundle
 BUNDLE_NAME="android-translations"
 BUNDLE_ID=$(crowdin bundle list \
     --token "$CROWDIN_TOKEN" \
@@ -101,11 +60,27 @@ if [ -z "$BUNDLE_ID" ]; then
     echo "  Created bundle ID: $BUNDLE_ID"
 fi
 
-mkdir -p "$PROJECT_DIR/crowdin_cli/bundle"
+TEMP_DIR=$(mktemp -d)
+trap 'rm -rf "$TEMP_DIR"' EXIT
+
 crowdin bundle download "$BUNDLE_ID" \
     --token "$CROWDIN_TOKEN" \
     --project-id "$CROWDIN_PROJECT_ID" \
-    --base-path "$PROJECT_DIR/crowdin_cli/bundle" \
+    --base-path "$TEMP_DIR" \
     "${EXTRA_ARGS[@]+"${EXTRA_ARGS[@]}"}"
+
+# Move bundle files to Android res folders
+SOURCE_LANG="en"
+for f in "$TEMP_DIR"/*/strings.xml; do
+    lang=$(basename "$(dirname "$f")")
+    if [ "$lang" = "$SOURCE_LANG" ]; then
+        dest="$PROJECT_DIR/app/src/main/res/values/strings.xml"
+    else
+        dest="$PROJECT_DIR/app/src/main/res/values-$lang/strings.xml"
+    fi
+    mkdir -p "$(dirname "$dest")"
+    mv "$f" "$dest"
+    echo "  Moved → res/$(basename "$(dirname "$dest")")/strings.xml"
+done
 
 echo "Done."
