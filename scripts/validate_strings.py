@@ -272,7 +272,11 @@ def remove_keys_from_file(path: str, keys_to_remove: set[str]):
                 if id(child) in saved["tails"]:
                     child.tail = saved["tails"][id(child)]
 
-    tree.write(path, encoding="unicode", xml_declaration=True)
+    xml_body = ET.tostring(root, encoding="unicode")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write('<?xml version="1.0" encoding="utf-8"?>\n')
+        f.write(xml_body)
+        f.write("\n")
 
 
 def remove_keys(res_dir: str, keys: set[str]):
