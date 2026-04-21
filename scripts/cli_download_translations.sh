@@ -44,14 +44,39 @@ done
 
 cd "$PROJECT_DIR"
 
+# Download source file
+crowdin download sources \
+    --token "$CROWDIN_TOKEN" \
+    --project-id "$CROWDIN_PROJECT_ID" \
+    --source "/Default.csv" \
+    --translation "/%two_letters_code%/Default.csv"
+
+# Move source into crowdin_cli/source/
+if [ "$DRY_RUN" = false ] && [ -f "$PROJECT_DIR/Default.csv" ]; then
+    mkdir -p "$PROJECT_DIR/crowdin_cli/source"
+    mv "$PROJECT_DIR/Default.csv" "$PROJECT_DIR/crowdin_cli/source/Default.csv"
+    echo "  Moved → crowdin_cli/source/Default.csv"
+fi
+
+# Download translations
 crowdin download \
     --token "$CROWDIN_TOKEN" \
     --project-id "$CROWDIN_PROJECT_ID" \
+    --source "/Default.csv" \
+    --translation "/%two_letters_code%/Default.csv" \
+    --all \
     "${EXTRA_ARGS[@]+"${EXTRA_ARGS[@]}"}"
 
+# Move translations into crowdin_cli/
 if [ "$DRY_RUN" = false ]; then
-    python3 "$SCRIPT_DIR/validate_strings.py" \
-        "$PROJECT_DIR/app/src/main/res"
+    for f in "$PROJECT_DIR"/*/Default.csv; do
+        lang_dir=$(basename "$(dirname "$f")")
+        dest="$PROJECT_DIR/crowdin_cli/$lang_dir/Default.csv"
+        mkdir -p "$(dirname "$dest")"
+        mv "$f" "$dest"
+        rmdir "$PROJECT_DIR/$lang_dir" 2>/dev/null || true
+        echo "  Moved → crowdin_cli/$lang_dir/Default.csv"
+    done
 fi
 
 echo "Done."
