@@ -19,6 +19,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "CROWDIN_DISTRIBUTION_HASH", "\"${project.findProperty("crowdin.distributionHash") ?: ""}\"")
     }
 
     buildTypes {
@@ -36,10 +38,12 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
 dependencies {
+    implementation("com.github.crowdin.mobile-sdk-android:sdk:1.18.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
