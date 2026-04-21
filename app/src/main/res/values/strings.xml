@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">Test Crowdin</string>
+    <string name="onboarding.login_apple.button" comment="continue_with_apple">Continue with Apple</string>
+    <string name="onboarding.verify_email.otp.label" comment="enter_the_otp_code_has_been_sent_to_email_samp">Enter the OTP code has been sent to {email@sample.com}</string>
+    <string name="onboarding.create_family.family_country.label" comment="familys_country_span_id_0_vietnam_span">Family’s country <span id="0">Vietnam</span></string>
+    <string name="onboarding_login_terms_description" comment="by_continuing_you_agree_to_our_u_id_0_s_u">By continuing, you agree to our <u id="0">%s </u></string>
 </resources>
