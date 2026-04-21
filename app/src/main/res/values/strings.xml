@@ -18,8 +18,7 @@
   <string name="onboarding.create_family.title" comment="create_a_new_family">CREATE NEW FAMILY</string>
   <string name="onboarding.create_family.family_name.title" comment="give_your_family_a_name_thats_easy_for_you_to">Give your family an easy-to-remember name</string>
   <string name="onboarding.create_family.family_name.input.placeholder" comment="family_name">Family name</string>
-  <string name="onboarding.create_family.family_country.label" comment="familys_country_span_id_0_vietnam_span">Family’s country <span id="0">Vietnam</span>
-  </string>
+  <string name="onboarding.create_family.family_country.label" comment="familys_country_span_id_0_vietnam_span">Family’s country <span id="0">Vietnam</span></string>
   <string name="common.next.button" comment="next">Next</string>
   <string name="common.logout.button" comment="log_out">Log out</string>
   <string name="onboarding.create_family.family_name.length_error" comment="family_name_must_contain_2_to_32_characters">Family name must contain 2 to 32 characters.</string>
@@ -29,8 +28,7 @@
   <string name="onboarding_add_member_share_link_button" comment="share_link">Share link</string>
   <string name="onboarding.add_member.step2.description" comment="ask_your_family_member_for_their_connect_code_t">Ask your member for their code and input it here to add them to your family</string>
   <string name="onboarding.add_member.how_code_works_button" comment="how_does_this_code_work">How does this code work?</string>
-  <string name="onboarding.add_member.setup_this_device_link" comment="not_ready_to_add_member_u_id_0_set_up_this">Not ready to add member? <u id="0">Set up your device first</u>
-  </string>
+  <string name="onboarding.add_member.setup_this_device_link" comment="not_ready_to_add_member_u_id_0_set_up_this">Not ready to add member? <u id="0">Set up your device first</u></string>
   <string name="onboarding.add_member.step2.subheading" comment="input_member_code_to_add">Input member code</string>
   <string name="onboarding.add_member.code_expired_error" comment="this_code_has_expired_request_a_new_one">Expired code. Please request a new one.</string>
   <string name="onboarding.add_member.incorrect_code_error" comment="incorrect_code_please_check_and_try_again">Incorrect code. Please check and try again.</string>
@@ -122,8 +120,7 @@ KinShield Companion</string>
 KinShield</string>
   <string name="master.welcome.subtitle" comment="subtext">{subtext}</string>
   <string name="onboarding.how_to_allow_permission.modal.title" comment="how_to_set_kinshield_as_default_caller_id">HOW TO SET KINSHIELD AS DEFAULT CALLER ID</string>
-  <string name="onboarding_login_terms_description" comment="by_continuing_you_agree_to_our_u_id_0_s_u">By continuing, you agree to our <u id="0">%s </u>
-  </string>
+  <string name="onboarding_login_terms_description" comment="by_continuing_you_agree_to_our_u_id_0_s_u">By continuing, you agree to our <u id="0">%s </u></string>
   <string name="test_123" comment="by_continuing_you_agree_to_our_s">By continuing, you agree to our %s</string>
   <string name="test_456" comment="by_continuing_you_agree_to_our_s">By continuing, you agree to our %s</string>
 </resources>

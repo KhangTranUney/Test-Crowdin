@@ -254,7 +254,24 @@ def remove_keys_from_file(path: str, keys_to_remove: set[str]):
     for elem in root.findall("string"):
         if elem.get("name") in keys_to_remove:
             root.remove(elem)
+
+    # Save mixed content (text + child elements) before ET.indent() mangles it
+    mixed: dict = {}
+    for elem in root.iter():
+        if elem.text and elem.text.strip() and len(elem):
+            mixed[id(elem)] = {"text": elem.text, "tails": {id(c): c.tail for c in elem}}
+
     ET.indent(tree, space="  ")
+
+    # Restore mixed content
+    for elem in root.iter():
+        saved = mixed.get(id(elem))
+        if saved:
+            elem.text = saved["text"]
+            for child in elem:
+                if id(child) in saved["tails"]:
+                    child.tail = saved["tails"][id(child)]
+
     tree.write(path, encoding="unicode", xml_declaration=True)
 
 

@@ -101,6 +101,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
         Text(text = "Hello $name!")
         Text(text = stringResource(R.string.onboarding_verify_email_otp_label))
+        Text(text = stringResource(R.string.companion_welcome_title))
         FamilyCountryLabel()
         LoginTermsDescription()
         LoginAppleButton()
