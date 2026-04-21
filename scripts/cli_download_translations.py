@@ -127,14 +127,15 @@ def fetch_lang_mapping(token: str, project_id: str) -> dict[str, str]:
 
 def find_or_create_bundle(token: str, project_id: str) -> str:
     """
-    Return the bundle ID for BUNDLE_NAME.
+    Return the bundle ID for BUNDLE_NAME, creating it if it doesn't exist.
 
-    If the bundle already exists, update it to ensure the translation pattern
-    is correct (%android_code%). This handles the case where the bundle was
-    previously created with %two_letters_code%, which causes collisions for
-    multi-region languages like zh-CN / zh-TW.
+    The bundle is configured with translation pattern /%android_code%/strings.xml
+    so every language-region combination gets a unique folder in the archive
+    (e.g. zh-rCN/, zh-rTW/ instead of both colliding into zh/).
 
-    If the bundle does not exist, create it.
+    Note: the Crowdin CLI does not support editing an existing bundle.
+    If the bundle was previously created with a different pattern (e.g. %two_letters_code%),
+    delete it from the Crowdin dashboard and run this script again to recreate it correctly.
     """
     # List all bundles and look for one named BUNDLE_NAME
     output = crowdin_capture(
@@ -142,37 +143,23 @@ def find_or_create_bundle(token: str, project_id: str) -> str:
         "--token", token, "--project-id", project_id,
         "--plain", "--no-progress",
     )
-    bundle_id = None
     for line in output.splitlines():
         # Each line: "<id>  <name>"
         parts = line.split(None, 1)
         if len(parts) == 2 and parts[1] == BUNDLE_NAME:
             bundle_id = parts[0]
-            break
+            print(f"Bundle '{BUNDLE_NAME}' found (ID: {bundle_id}).")
+            return bundle_id
 
-    if bundle_id:
-        # Bundle exists — update it to enforce the correct translation pattern
-        print(f"Bundle '{BUNDLE_NAME}' found (ID: {bundle_id}), updating pattern...")
-        crowdin_capture(
-            "bundle", "edit", bundle_id,
-            "--token", token, "--project-id", project_id,
-            "--format", "android",
-            "--source", "/**",               # include all source files
-            "--translation", BUNDLE_TRANSLATION_PATTERN,
-            "--include-source-language",     # include English (source) in the archive
-            "--plain", "--no-progress",
-        )
-        return bundle_id
-
-    # Bundle not found — create it
+    # Bundle not found — create it with the correct pattern
     print(f"Bundle '{BUNDLE_NAME}' not found, creating...")
     output = crowdin_capture(
         "bundle", "add", BUNDLE_NAME,
         "--token", token, "--project-id", project_id,
         "--format", "android",
-        "--source", "/**",
+        "--source", "/**",               # include all source files
         "--translation", BUNDLE_TRANSLATION_PATTERN,
-        "--include-source-language",
+        "--include-source-language",     # include English (source) in the archive
         "--plain", "--no-progress",
     )
     bundle_id = output.split()[0]
