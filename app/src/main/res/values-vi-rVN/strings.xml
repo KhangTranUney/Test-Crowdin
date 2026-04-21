@@ -1,129 +1,129 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
-  <string name="onboarding.login_apple.button" comment="continue_with_apple">Continue with Apple</string>
-  <string name="onboarding.login_google.button" comment="continue_with_google">Continue with Google</string>
-  <string name="onboarding.login.divider" comment="or_continue_with_email">Or continue with email</string>
-  <string name="onboarding.login_email.input.placeholder" comment="enter_your_email">Enter your email</string>
-  <string name="onboarding.login.title" comment="welcome_to_kinshield">WELCOME TO KINSHIELD</string>
-  <string name="onboarding.verify_email.title" comment="verify_your_email">VERIFY YOUR EMAIL</string>
-  <string name="onboarding.verify_email.otp.label" comment="enter_the_otp_code_has_been_sent_to_email_samp">Enter the OTP code has been sent to {email@sample.com}</string>
-  <string name="onboarding.verify_email.resend.label" comment="resend_in_02_00">Resend in 02:00</string>
-  <string name="onboarding.verify_email.loading" comment="loading">Loading</string>
-  <string name="onboarding.verify_email.code_sent.toast" comment="a_new_code_has_been_sent_please_check_your_em">A new code has been sent,  please check your email.</string>
-  <string name="onboarding.verify_email.limit_reached.hint" comment="youve_reached_the_daily_limit_to_send_new_code">You’ve reached the daily limit to send new code.  Please try again in 24 hours.</string>
-  <string name="onboarding.verify_email.resend.button" comment="resend">Resend code</string>
-  <string name="onboarding.verify_email.invalid_code.error" comment="incorrect_code_please_check_and_try_again">Incorrect code. Please check and try again.</string>
-  <string name="onboarding.verify_email.wrong_code_attempt.error" comment="youve_entered_the_wrong_code_3_times_please_d">You’ve entered the wrong code 3 times. Please double-check your code or request a new one.</string>
-  <string name="onboarding.t&amp;c.title" comment="kin_shield_privacy_policy">KinShield Privacy Policy</string>
-  <string name="onboarding.t&amp;c_error.title" comment="we_cant_connect_right_now">No internet connection</string>
-  <string name="onboarding.t&amp;c_error.subtitle" comment="please_check_your_internet_connection_and_try_a">Please check your internet connection and try again</string>
-  <string name="common.refresh.button" comment="refresh">Refresh</string>
-  <string name="onboarding.create_family.title" comment="create_a_new_family">CREATE NEW FAMILY</string>
-  <string name="onboarding.create_family.family_name.title" comment="give_your_family_a_name_thats_easy_for_you_to">Give your family an easy-to-remember name</string>
-  <string name="onboarding.create_family.family_name.input.placeholder" comment="family_name">Family name</string>
-  <string name="onboarding.create_family.family_country.label" comment="familys_country_span_id_0_vietnam_span">Family’s country <span id="0">Vietnam</span></string>
-  <string name="common.next.button" comment="next">Next</string>
-  <string name="common.logout.button" comment="log_out">Log out</string>
-  <string name="onboarding.create_family.family_name.length_error" comment="family_name_must_contain_2_to_32_characters">Family name must contain 2 to 32 characters.</string>
-  <string name="onboarding.add_member.title" comment="add_new_member">ADD NEW MEMBER</string>
-  <string name="onboarding.add_member.step1.subheading" comment="install_kin_shield_on_members_device">Install KinShield Companion App</string>
-  <string name="onboarding.add_member.step1.description" comment="scan_the_qr_code_or_share_the_link_to_download">On member’s device, scan this QR code to download the app.</string>
-  <string name="onboarding_add_member_share_link_button" comment="share_link">Share link</string>
-  <string name="onboarding.add_member.step2.description" comment="ask_your_family_member_for_their_connect_code_t">Ask your member for their code and input it here to add them to your family</string>
-  <string name="onboarding.add_member.how_code_works_button" comment="how_does_this_code_work">How does this code work?</string>
-  <string name="onboarding.add_member.setup_this_device_link" comment="not_ready_to_add_member_u_id_0_set_up_this">Not ready to add member? <u id="0">Set up your device first</u></string>
-  <string name="onboarding.add_member.step2.subheading" comment="input_member_code_to_add">Input member code</string>
-  <string name="onboarding.add_member.code_expired_error" comment="this_code_has_expired_request_a_new_one">Expired code. Please request a new one.</string>
-  <string name="onboarding.add_member.incorrect_code_error" comment="incorrect_code_please_check_and_try_again">Incorrect code. Please check and try again.</string>
-  <string name="onboarding.add_member.wrong_code_attempts_error" comment="youve_entered_the_wrong_code_x_times_please">You’ve entered the wrong code {x} times. Please try again in {x} minutes.</string>
-  <string name="common.later.button" comment="later">Later</string>
-  <string name="onboarding.setup_device.title" comment="setup_for_iphone_17_pro">SET UP FOR IPHONE 17 PRO</string>
-  <string name="onboarding.setup_device.subheading" comment="give_device_a_name_you_can_choose_something_th">Give device a name, you can choose something that easy to remember</string>
-  <string name="onboarding.setup_device.device_name.input.placeholder" comment="ex_emmas_phone">e.g. Emma’s phone</string>
-  <string name="onboarding.select_mode.title" comment="select_protect_mode">SELECT PROTECT MODE</string>
-  <string name="onboarding.select_mode.subheading" comment="base_on_who_will_use_this_device_you_can_selec">Base on who will use this device, you can select the suitable mode or create a new mode with our protect method</string>
-  <string name="onboarding.select_mode.basic_care_card.title" comment="basic_care">Basic Care</string>
-  <string name="onboarding.select_mode.basic_care_card.subtitle" comment="essential_protection_for_daily_use">Essential protection for daily use</string>
-  <string name="onboarding.select_mode.call_chip" comment="call">Call</string>
-  <string name="onboarding.select_mode.sms_chip" comment="sms">SMS</string>
-  <string name="onboarding.select_mode.full_coverage_card.title" comment="full_coverage">Full Coverage</string>
-  <string name="onboarding.select_mode.full_coverage_card.subtitle" comment="extra_layer_protection_for_better_safety">Extra-layer protection for better safety</string>
-  <string name="onboarding.select_mode.web_chip" comment="web">Web</string>
-  <string name="onboarding.select_mode.create_mode_button" comment="create_new_mode">Create new mode</string>
-  <string name="onboarding.create_mode.title" comment="create_new_mode">CREATE NEW MODE</string>
-  <string name="onboarding.create_mode.mode_name_label" comment="mode_name">Mode name</string>
-  <string name="onboarding.create_mode.mode_name_placeholder" comment="ex_emma_safe_mode">Ex: Emma safe mode</string>
-  <string name="onboarding.create_mode.call_detection_card.title" comment="call_detection">Call detection</string>
-  <string name="onboarding.create_mode.call_detection_card.subtitle" comment="detects_unknown_callers_and_alerts_about_risky">Detects unknown callers and alerts about risky call attempts.</string>
-  <string name="onboarding.create_mode.sms_protection_card.title" comment="sms_protection">SMS protection</string>
-  <string name="common.create.button" comment="create">Create</string>
-  <string name="home.device_added.toast" comment="device_name_s_device_added_successfully">{device-name}’s device added successfully</string>
-  <string name="onboarding.setup_device.device_name.length_error" comment="device_name_must_contain_2_to_32_characters">Device name must contain 2 to 32 characters.</string>
-  <string name="onboarding.setup_device.device_name.special_character_error" comment="special_characters_amp_are_not">Special characters (# $ % } { * &amp;) are not supported.</string>
-  <string name="onboarding.create_mode.mode_name.length_error" comment="special_characters_amp_are_not">Special characters (# $ % } { * &amp;) are not supported.</string>
-  <string name="onboarding.create_mode.mode_name.special_character_error" comment="mode_name_must_contain_2_to_32_characters">Mode name must contain 2 to 32 characters.</string>
-  <string name="onboarding.call_permission.title" comment="allow_permissions">ALLOW PERMISSIONS</string>
-  <string name="onboarding.call_permission.how_to_setup_button" comment="how_to_setup">How to set up</string>
-  <string name="onboarding.call_permission.subheading" comment="protect_you_calls">Protect your calls</string>
-  <string name="onboarding.call_permission.description" comment="allow_this_to_identify_unknown_callers_and_dete">Allow this to identify unknown callers and detect spam calls</string>
-  <string name="onboarding.call_permission.how_it_works_title" comment="how_this_works">How this works</string>
-  <string name="onboarding.call_permission.how_it_works_subtitle" comment="kin_shield_uses_this_permission_to_identify_inco">KinShield uses this permission to identify incoming calls and warn you about spam or suspicious numbers.</string>
-  <string name="common.allow.button" comment="allow">Allow</string>
-  <string name="onboarding.call_permission.allowed_button" comment="allowed">Allowed</string>
-  <string name="common.set_up_now.button" comment="set_up_now">Set up now</string>
-  <string name="onboarding.android_call_permission.call_history_label" comment="call_history">Call history</string>
-  <string name="onboarding.android_call_permission.need_setup_status" comment="need_set_up">Need set up</string>
-  <string name="onboarding.android_call_permission.manage_call_label" comment="manage_calls_long_text_example">Manage calls {long text example}</string>
-  <string name="onboarding.android_call_permission.default_caller_ID_label" comment="default_caller_id">Default caller ID</string>
-  <string name="onboarding.android_call_permission.done_status" comment="done">Done</string>
-  <string name="onboarding.how_to_allow_modal.title" comment="how_to_set_kinshield_as_default_caller_id_amp">HOW TO SET KINSHIELD AS DEFAULT CALLER ID &amp; SCAM APP</string>
-  <string name="onboarding.how_to_allow_modal.description" comment="select_kin_shield_from_the_list_of_call_directio">Select KinShield from the list of Call direction App and “Set as default” to continue</string>
-  <string name="onboarding.setup_done.title" comment="youre_all_set">You’re all set</string>
-  <string name="onboarding.setup_done.subtitle" comment="kin_shield_is_now_protecting_you_and_your_family">KinShield is now protecting you and your family</string>
-  <string name="common.done.button" comment="enter_kin_shield">Done</string>
-  <string name="onboarding.android_call_permissio.description" comment="enable_these_permissions_to_detect_scam_calls_a">Enable these permissions to detect scam calls and keep your calls safe</string>
-  <string name="onboarding.share_code.title" comment="ready_to_join_a_family">Ready to
+    <string name="onboarding.login_apple.button" comment="continue_with_apple">Continue with Apple</string>
+    <string name="onboarding.login_google.button" comment="continue_with_google">Continue with Google</string>
+    <string name="onboarding.login.divider" comment="or_continue_with_email">Or continue with email</string>
+    <string name="onboarding.login_email.input.placeholder" comment="enter_your_email">Enter your email</string>
+    <string name="onboarding.login.title" comment="welcome_to_kinshield">WELCOME TO KINSHIELD</string>
+    <string name="onboarding.verify_email.title" comment="verify_your_email">VERIFY YOUR EMAIL</string>
+    <string name="onboarding.verify_email.otp.label" comment="enter_the_otp_code_has_been_sent_to_email_samp">Enter the OTP code has been sent to {email@sample.com}</string>
+    <string name="onboarding.verify_email.resend.label" comment="resend_in_02_00">Resend in 02:00</string>
+    <string name="onboarding.verify_email.loading" comment="loading">Loading</string>
+    <string name="onboarding.verify_email.code_sent.toast" comment="a_new_code_has_been_sent_please_check_your_em">A new code has been sent,  please check your email.</string>
+    <string name="onboarding.verify_email.limit_reached.hint" comment="youve_reached_the_daily_limit_to_send_new_code">You’ve reached the daily limit to send new code.  Please try again in 24 hours.</string>
+    <string name="onboarding.verify_email.resend.button" comment="resend">Resend code</string>
+    <string name="onboarding.verify_email.invalid_code.error" comment="incorrect_code_please_check_and_try_again">Incorrect code. Please check and try again.</string>
+    <string name="onboarding.verify_email.wrong_code_attempt.error" comment="youve_entered_the_wrong_code_3_times_please_d">You’ve entered the wrong code 3 times. Please double-check your code or request a new one.</string>
+    <string name="common.refresh.button" comment="refresh">Refresh</string>
+    <string name="onboarding.create_family.title" comment="create_a_new_family">CREATE NEW FAMILY</string>
+    <string name="onboarding.create_family.family_name.title" comment="give_your_family_a_name_thats_easy_for_you_to">Give your family an easy-to-remember name</string>
+    <string name="onboarding.create_family.family_name.input.placeholder" comment="family_name">Family name</string>
+    <string name="onboarding.create_family.family_country.label" comment="familys_country_span_id_0_vietnam_span">Family’s country <span id="0">Vietnam</span>
+    </string>
+    <string name="common.next.button" comment="next">Next</string>
+    <string name="common.logout.button" comment="log_out">Log out</string>
+    <string name="onboarding.create_family.family_name.length_error" comment="family_name_must_contain_2_to_32_characters">Family name must contain 2 to 32 characters.</string>
+    <string name="onboarding.add_member.title" comment="add_new_member">ADD NEW MEMBER</string>
+    <string name="onboarding.add_member.step1.subheading" comment="install_kin_shield_on_members_device">Install KinShield Companion App</string>
+    <string name="onboarding.add_member.step1.description" comment="scan_the_qr_code_or_share_the_link_to_download">On member’s device, scan this QR code to download the app.</string>
+    <string name="onboarding_add_member_share_link_button" comment="share_link">Share link</string>
+    <string name="onboarding.add_member.step2.description" comment="ask_your_family_member_for_their_connect_code_t">Ask your member for their code and input it here to add them to your family</string>
+    <string name="onboarding.add_member.how_code_works_button" comment="how_does_this_code_work">How does this code work?</string>
+    <string name="onboarding.add_member.setup_this_device_link" comment="not_ready_to_add_member_u_id_0_set_up_this">Not ready to add member? <u id="0">Set up your device first</u>
+    </string>
+    <string name="onboarding.add_member.step2.subheading" comment="input_member_code_to_add">Input member code</string>
+    <string name="onboarding.add_member.code_expired_error" comment="this_code_has_expired_request_a_new_one">Expired code. Please request a new one.</string>
+    <string name="onboarding.add_member.incorrect_code_error" comment="incorrect_code_please_check_and_try_again">Incorrect code. Please check and try again.</string>
+    <string name="onboarding.add_member.wrong_code_attempts_error" comment="youve_entered_the_wrong_code_x_times_please">You’ve entered the wrong code {x} times. Please try again in {x} minutes.</string>
+    <string name="common.later.button" comment="later">Later</string>
+    <string name="onboarding.setup_device.title" comment="setup_for_iphone_17_pro">SET UP FOR IPHONE 17 PRO</string>
+    <string name="onboarding.setup_device.subheading" comment="give_device_a_name_you_can_choose_something_th">Give device a name, you can choose something that easy to remember</string>
+    <string name="onboarding.setup_device.device_name.input.placeholder" comment="ex_emmas_phone">e.g. Emma’s phone</string>
+    <string name="onboarding.select_mode.title" comment="select_protect_mode">SELECT PROTECT MODE</string>
+    <string name="onboarding.select_mode.subheading" comment="base_on_who_will_use_this_device_you_can_selec">Base on who will use this device, you can select the suitable mode or create a new mode with our protect method</string>
+    <string name="onboarding.select_mode.basic_care_card.title" comment="basic_care">Basic Care</string>
+    <string name="onboarding.select_mode.basic_care_card.subtitle" comment="essential_protection_for_daily_use">Essential protection for daily use</string>
+    <string name="onboarding.select_mode.call_chip" comment="call">Call</string>
+    <string name="onboarding.select_mode.sms_chip" comment="sms">SMS</string>
+    <string name="onboarding.select_mode.full_coverage_card.title" comment="full_coverage">Full Coverage</string>
+    <string name="onboarding.select_mode.full_coverage_card.subtitle" comment="extra_layer_protection_for_better_safety">Extra-layer protection for better safety</string>
+    <string name="onboarding.select_mode.web_chip" comment="web">Web</string>
+    <string name="onboarding.select_mode.create_mode_button" comment="create_new_mode">Create new mode</string>
+    <string name="onboarding.create_mode.title" comment="create_new_mode">CREATE NEW MODE</string>
+    <string name="onboarding.create_mode.mode_name_label" comment="mode_name">Mode name</string>
+    <string name="onboarding.create_mode.mode_name_placeholder" comment="ex_emma_safe_mode">Ex: Emma safe mode</string>
+    <string name="onboarding.create_mode.call_detection_card.title" comment="call_detection">Call detection</string>
+    <string name="onboarding.create_mode.call_detection_card.subtitle" comment="detects_unknown_callers_and_alerts_about_risky">Detects unknown callers and alerts about risky call attempts.</string>
+    <string name="onboarding.create_mode.sms_protection_card.title" comment="sms_protection">SMS protection</string>
+    <string name="common.create.button" comment="create">Create</string>
+    <string name="home.device_added.toast" comment="device_name_s_device_added_successfully">{device-name}’s device added successfully</string>
+    <string name="onboarding.setup_device.device_name.length_error" comment="device_name_must_contain_2_to_32_characters">Device name must contain 2 to 32 characters.</string>
+    <string name="onboarding.setup_device.device_name.special_character_error" comment="special_characters_amp_are_not">Special characters (# $ % } { * &amp;) are not supported.</string>
+    <string name="onboarding.create_mode.mode_name.length_error" comment="special_characters_amp_are_not">Special characters (# $ % } { * &amp;) are not supported.</string>
+    <string name="onboarding.create_mode.mode_name.special_character_error" comment="mode_name_must_contain_2_to_32_characters">Mode name must contain 2 to 32 characters.</string>
+    <string name="onboarding.call_permission.title" comment="allow_permissions">ALLOW PERMISSIONS</string>
+    <string name="onboarding.call_permission.how_to_setup_button" comment="how_to_setup">How to set up</string>
+    <string name="onboarding.call_permission.subheading" comment="protect_you_calls">Protect your calls</string>
+    <string name="onboarding.call_permission.description" comment="allow_this_to_identify_unknown_callers_and_dete">Allow this to identify unknown callers and detect spam calls</string>
+    <string name="onboarding.call_permission.how_it_works_title" comment="how_this_works">How this works</string>
+    <string name="onboarding.call_permission.how_it_works_subtitle" comment="kin_shield_uses_this_permission_to_identify_inco">KinShield uses this permission to identify incoming calls and warn you about spam or suspicious numbers.</string>
+    <string name="common.allow.button" comment="allow">Allow</string>
+    <string name="onboarding.call_permission.allowed_button" comment="allowed">Allowed</string>
+    <string name="common.set_up_now.button" comment="set_up_now">Set up now</string>
+    <string name="onboarding.android_call_permission.call_history_label" comment="call_history">Call history</string>
+    <string name="onboarding.android_call_permission.need_setup_status" comment="need_set_up">Need set up</string>
+    <string name="onboarding.android_call_permission.manage_call_label" comment="manage_calls_long_text_example">Manage calls {long text example}</string>
+    <string name="onboarding.android_call_permission.default_caller_ID_label" comment="default_caller_id">Default caller ID</string>
+    <string name="onboarding.android_call_permission.done_status" comment="done">Done</string>
+    <string name="onboarding.how_to_allow_modal.title" comment="how_to_set_kinshield_as_default_caller_id_amp">HOW TO SET KINSHIELD AS DEFAULT CALLER ID &amp; SCAM APP</string>
+    <string name="onboarding.how_to_allow_modal.description" comment="select_kin_shield_from_the_list_of_call_directio">Select KinShield from the list of Call direction App and “Set as default” to continue</string>
+    <string name="onboarding.setup_done.title" comment="youre_all_set">You’re all set</string>
+    <string name="onboarding.setup_done.subtitle" comment="kin_shield_is_now_protecting_you_and_your_family">KinShield is now protecting you and your family</string>
+    <string name="common.done.button" comment="enter_kin_shield">Done</string>
+    <string name="onboarding.android_call_permissio.description" comment="enable_these_permissions_to_detect_scam_calls_a">Enable these permissions to detect scam calls and keep your calls safe</string>
+    <string name="onboarding.share_code.title" comment="ready_to_join_a_family">Ready to
 join a family</string>
-  <string name="onboarding.share_code.subtitle" comment="you_now_can_share_this_code_to_your_family_owne">Share this code to your family owner to join their family</string>
-  <string name="onboarding.share_code.share_code_card.subheading" comment="share_this_code_to_join_family">SHARE THIS CODE TO JOIN FAMILY</string>
-  <string name="onboarding.share_code.share_code_card.countdown" comment="this_code_expires_in_15_00">This code expires in 15:00</string>
-  <string name="onboarding.share_code.button" comment="share_code">Share code</string>
-  <string name="onboarding.share_code.expired_error" comment="code_expired">Code expired</string>
-  <string name="onboarding.share_code.refreshed_toast" comment="your_code_has_been_refreshed">Your code has been refreshed</string>
-  <string name="onboarding.select_country.title" comment="select_familys_country">Select family’s country</string>
-  <string name="onboarding.select_country.subtitle" comment="this_helps_us_apply_the_right_protections_for_y">This helps us apply the right protections for your family.</string>
-  <string name="common.cancel.button" comment="cancel">Cancel</string>
-  <string name="onboarding.select_country.confirm_modal.title" comment="set_vanuatu_as_your_country">Set “Vanuatu” as family country</string>
-  <string name="onboarding.select_country.confirm_modal.description" comment="this_helps_us_choose_and_apply_the_right_protec">This helps us choose and apply the right protections for your family. This can’t be changed later.</string>
-  <string name="common.confirm.button" comment="confirm">Confirm</string>
-  <string name="onboarding.notification_modal.title" comment="stay_informed_with_us">Stay informed with us</string>
-  <string name="onboarding.notification_modal.description" comment="allow_noatifications_to_get_important_family_up">Allow notifications to get important family updates and keep your device protected with real‑time alerts.</string>
-  <string name="onboarding.notification_modal.enable_button" comment="enable_notification">Enable notification</string>
-  <string name="noti_permission.bottomsheet.title" comment="stay_informed_with_critical_alerts">Stay informed with critical alerts</string>
-  <string name="common.allow_noti.button" comment="enable_notification">Allow notifications</string>
-  <string name="common.agree.button" comment="agree">Agree</string>
-  <string name="onboarding.login.invalid_email_error" comment="your_email_is_too_short">Your email is incorrect, please check and try again.</string>
-  <string name="onboarding.setup_exit_modal.title" comment="do_you_want_to_stop">Stop setup</string>
-  <string name="onboarding.setup_exit_modal.description" comment="it_takes_only_a_minute_to_finish_setup_and_prot">It takes only a minute to finish the setup and protect this device. Do you want to stop?</string>
-  <string name="common.stop.button" comment="stop">Stop</string>
-  <string name="onboarding.android_call_permission.all_approved_button" comment="all_approved">All approved</string>
-  <string name="onboarding_android_callpermission.continue_setup.button" comment="continue_setup">Continue setup</string>
-  <string name="onboarding.add_member.how_to_get_code.button" comment="how_to_get_this_code">How to get this code?</string>
-  <string name="onboarding.add_member.how_to_get_code.modal.title" comment="how_to_get_this_code">How to get this code?</string>
-  <string name="onboarding.add_member.how_to_get_code.modal_subtitle" comment="download_and_open_kin_shield_member_app_on_your">Download and open KinShield Companion App on member device, finish the initial setup to get the code.</string>
-  <string name="onboarding.add_member.how_to_download.card.title" comment="how_to_download">How to download</string>
-  <string name="onboarding.add_member.how_to_download.card.description" comment="if_that_device_has_not_installed_kin_shield_memb">If KinShield Member isn\'t installed on that device, download it using this QR code or the link below.</string>
-  <string name="onboarding.add_member.share_download_link.button" comment="share_download_link">Share download link</string>
-  <string name="onboarding.create_mode.subheading" comment="base_on_who_will_use_this_device_you_can_selec">Name this mode so you can reuse it on other devices later.</string>
-  <string name="onboarding.setup_exit_modal.continue_button" comment="continue_setup">Continue setup</string>
-  <string name="companion.welcome.title" comment="welcome_to_kin_shield_companion">Welcome to
+    <string name="onboarding.share_code.subtitle" comment="you_now_can_share_this_code_to_your_family_owne">Share this code to your family owner to join their family</string>
+    <string name="onboarding.share_code.share_code_card.subheading" comment="share_this_code_to_join_family">SHARE THIS CODE TO JOIN FAMILY</string>
+    <string name="onboarding.share_code.share_code_card.countdown" comment="this_code_expires_in_15_00">This code expires in 15:00</string>
+    <string name="onboarding.share_code.button" comment="share_code">Share code</string>
+    <string name="onboarding.share_code.expired_error" comment="code_expired">Code expired</string>
+    <string name="onboarding.share_code.refreshed_toast" comment="your_code_has_been_refreshed">Your code has been refreshed</string>
+    <string name="onboarding.select_country.title" comment="select_familys_country">Select family’s country</string>
+    <string name="onboarding.select_country.subtitle" comment="this_helps_us_apply_the_right_protections_for_y">This helps us apply the right protections for your family.</string>
+    <string name="common.cancel.button" comment="cancel">Cancel</string>
+    <string name="onboarding.select_country.confirm_modal.title" comment="set_vanuatu_as_your_country">Set “Vanuatu” as family country</string>
+    <string name="onboarding.select_country.confirm_modal.description" comment="this_helps_us_choose_and_apply_the_right_protec">This helps us choose and apply the right protections for your family. This can’t be changed later.</string>
+    <string name="common.confirm.button" comment="confirm">Confirm</string>
+    <string name="onboarding.notification_modal.title" comment="stay_informed_with_us">Stay informed with us</string>
+    <string name="onboarding.notification_modal.description" comment="allow_noatifications_to_get_important_family_up">Allow notifications to get important family updates and keep your device protected with real‑time alerts.</string>
+    <string name="onboarding.notification_modal.enable_button" comment="enable_notification">Enable notification</string>
+    <string name="noti_permission.bottomsheet.title" comment="stay_informed_with_critical_alerts">Stay informed with critical alerts</string>
+    <string name="common.allow_noti.button" comment="enable_notification">Allow notifications</string>
+    <string name="common.agree.button" comment="agree">Agree</string>
+    <string name="onboarding.login.invalid_email_error" comment="your_email_is_too_short">Your email is incorrect, please check and try again.</string>
+    <string name="onboarding.setup_exit_modal.title" comment="do_you_want_to_stop">Stop setup</string>
+    <string name="onboarding.setup_exit_modal.description" comment="it_takes_only_a_minute_to_finish_setup_and_prot">It takes only a minute to finish the setup and protect this device. Do you want to stop?</string>
+    <string name="common.stop.button" comment="stop">Stop</string>
+    <string name="onboarding.android_call_permission.all_approved_button" comment="all_approved">All approved</string>
+    <string name="onboarding_android_callpermission.continue_setup.button" comment="continue_setup">Continue setup</string>
+    <string name="onboarding.add_member.how_to_get_code.button" comment="how_to_get_this_code">How to get this code?</string>
+    <string name="onboarding.add_member.how_to_get_code.modal.title" comment="how_to_get_this_code">How to get this code?</string>
+    <string name="onboarding.add_member.how_to_get_code.modal_subtitle" comment="download_and_open_kin_shield_member_app_on_your">Download and open KinShield Companion App on member device, finish the initial setup to get the code.</string>
+    <string name="onboarding.add_member.how_to_download.card.title" comment="how_to_download">How to download</string>
+    <string name="onboarding.add_member.how_to_download.card.description" comment="if_that_device_has_not_installed_kin_shield_memb">If KinShield Member isn\'t installed on that device, download it using this QR code or the link below.</string>
+    <string name="onboarding.add_member.share_download_link.button" comment="share_download_link">Share download link</string>
+    <string name="onboarding.create_mode.subheading" comment="base_on_who_will_use_this_device_you_can_selec">Name this mode so you can reuse it on other devices later.</string>
+    <string name="onboarding.setup_exit_modal.continue_button" comment="continue_setup">Continue setup</string>
+    <string name="companion.welcome.title" comment="welcome_to_kin_shield_companion">Welcome to
 KinShield Companion</string>
-  <string name="companion.welcome.subtitle" comment="subtext">{subtext}</string>
-  <string name="master.welcome.title" comment="welcome_to_kin_shield">Welcome to
+    <string name="companion.welcome.subtitle" comment="subtext">{subtext}</string>
+    <string name="master.welcome.title" comment="welcome_to_kin_shield">Welcome to
 KinShield</string>
-  <string name="master.welcome.subtitle" comment="subtext">{subtext}</string>
-  <string name="onboarding.how_to_allow_permission.modal.title" comment="how_to_set_kinshield_as_default_caller_id">HOW TO SET KINSHIELD AS DEFAULT CALLER ID</string>
-  <string name="onboarding_login_terms_description" comment="by_continuing_you_agree_to_our_u_id_0_s_u">By continuing, you agree to our <u id="0">%s </u></string>
-  <string name="test_123" comment="by_continuing_you_agree_to_our_s">By continuing, you agree to our %s</string>
-  <string name="test_456" comment="by_continuing_you_agree_to_our_s">By continuing, you agree to our %s</string>
+    <string name="master.welcome.subtitle" comment="subtext">{subtext}</string>
+    <string name="onboarding.how_to_allow_permission.modal.title" comment="how_to_set_kinshield_as_default_caller_id">HOW TO SET KINSHIELD AS DEFAULT CALLER ID</string>
+    <string name="onboarding_login_terms_description" comment="by_continuing_you_agree_to_our_u_id_0_s_u">By continuing, you agree to our <u id="0">%s </u>
+    </string>
+    <string name="test_123" comment="by_continuing_you_agree_to_our_s">By continuing, you agree to our %s</string>
+    <string name="test_456" comment="by_continuing_you_agree_to_our_s">Bằng cách tiếp tục, bạn đồng ý với %s</string>
 </resources>
