@@ -254,7 +254,7 @@ def remove_keys_from_file(path: str, keys_to_remove: set[str]):
     for elem in root.findall("string"):
         if elem.get("name") in keys_to_remove:
             root.remove(elem)
-    ET.indent(tree, space="    ")
+    ET.indent(tree, space="  ")
     tree.write(path, encoding="unicode", xml_declaration=True)
 
 
